@@ -20,11 +20,13 @@
   "homepage": "https://github.com/Saraswatichaudhary/mern-estate#readme",
   "description": "",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.3",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "react-redux": "^9.2.0"
   }
 }
