@@ -62,8 +62,7 @@ export default function CreateListing() {
     return new Promise(async (resolve, reject) => {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "listing_images"); // your unsigned upload preset name
-
+      formData.append("upload_preset", "listing_images"); 
       try {
         const res = await fetch("https://api.cloudinary.com/v1_1/daoxb0prf/image/upload", {
           method: "POST",
