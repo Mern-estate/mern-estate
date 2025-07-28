@@ -59,19 +59,17 @@ export default function Listing() {
       )}
       {listing && !loading && !error && (
         <div>
-          <Swiper navigation>
-            {listing.imageUrls.map((url) => (
-              <SwiperSlide key={url}>
-                <div
-                  className='h-[550px]'
-                  style={{
-                    background: `url(${url}) center no-repeat`,
-                    backgroundSize: 'cover',
-                  }}
-                ></div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <Swiper navigation className="w-full max-w-4xl mx-auto h-[400px] mt-5">
+  {listing.imageUrls.map((url) => (
+    <SwiperSlide key={url} className="w-full h-full">
+      <img
+        src={url}
+        alt="listing preview"
+        className="w-full h-full object-cover rounded-md"
+      />
+    </SwiperSlide>
+  ))}
+</Swiper>
           <div className='fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer'>
             <FaShare
               className='text-slate-500'
