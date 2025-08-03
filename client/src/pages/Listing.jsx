@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { useSelector } from 'react-redux';
@@ -16,9 +16,6 @@ import {
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
 
-
-// https://sabe.io/blog/javascript-format-numbers-commas#:~:text=The%20best%20way%20to%20format,format%20the%20number%20with%20commas.
-
 export default function Listing() {
   SwiperCore.use([Navigation]);
   const [listing, setListing] = useState(null);
@@ -27,6 +24,7 @@ export default function Listing() {
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);
   const params = useParams();
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -60,16 +58,16 @@ export default function Listing() {
       {listing && !loading && !error && (
         <div>
           <Swiper navigation className="w-full max-w-4xl mx-auto h-[400px] mt-5">
-  {listing.imageUrls.map((url) => (
-    <SwiperSlide key={url} className="w-full h-full">
-      <img
-        src={url}
-        alt="listing preview"
-        className="w-full h-full object-cover rounded-md"
-      />
-    </SwiperSlide>
-  ))}
-</Swiper>
+            {listing.imageUrls.map((url) => (
+              <SwiperSlide key={url} className="w-full h-full">
+                <img
+                  src={url}
+                  alt="listing preview"
+                  className="w-full h-full object-cover rounded-md"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
           <div className='fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer'>
             <FaShare
               className='text-slate-500'
@@ -95,7 +93,7 @@ export default function Listing() {
                 : listing.regularPrice.toLocaleString('en-US')}
               {listing.type === 'rent' && ' / month'}
             </p>
-            <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
+            <p className='flex items-center mt-6 gap-2 text-slate-600 text-sm'>
               <FaMapMarkerAlt className='text-green-700' />
               {listing.address}
             </p>
@@ -114,26 +112,33 @@ export default function Listing() {
               {listing.description}
             </p>
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
-              <li className='flex items-center gap-1 whitespace-nowrap  '>
+              <li className='flex items-center gap-1 whitespace-nowrap'>
                 <FaBed className='text-lg' />
-                {listing.bedrooms > 1 ? `${listing.bedrooms} beds `
-                  : `${listing.bedrooms} bed `}
+                {listing.bedrooms > 1 ? `${listing.bedrooms} beds ` : `${listing.bedrooms} bed `}
               </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
+              <li className='flex items-center gap-1 whitespace-nowrap'>
                 <FaBath className='text-lg' />
-                {listing.bathrooms > 1
-                  ? `${listing.bathrooms} baths `
-                  : `${listing.bathrooms} bath `}
+                {listing.bathrooms > 1 ? `${listing.bathrooms} baths ` : `${listing.bathrooms} bath `}
               </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
+              <li className='flex items-center gap-1 whitespace-nowrap'>
                 <FaParking className='text-lg' />
                 {listing.parking ? 'Parking spot' : 'No Parking'}
               </li>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
+              <li className='flex items-center gap-1 whitespace-nowrap'>
                 <FaChair className='text-lg' />
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+
+            {/* SIGN IN or CONTACT BUTTONS */}
+            {!currentUser && (
+              <button
+                onClick={() => navigate('/sign-in')}
+                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+              >
+                Sign In to Contact Landlord
+              </button>
+            )}
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
@@ -142,8 +147,7 @@ export default function Listing() {
                 Contact landlord
               </button>
             )}
-            {contact && <Contact listing={listing} />}
-            
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}
