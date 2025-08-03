@@ -97,7 +97,9 @@ export default function Listing() {
               <FaMapMarkerAlt className='text-green-700' />
               {listing.address}
             </p>
-            <div className='flex gap-4'>
+
+            {/* TYPE / DISCOUNT / STATUS */}
+            <div className='flex flex-wrap gap-4'>
               <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
                 {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
               </p>
@@ -106,7 +108,17 @@ export default function Listing() {
                   Rs {+listing.regularPrice - +listing.discountPrice} OFF
                 </p>
               )}
+              <p
+                className={`${
+                  listing.status === 'Available'
+                    ? 'bg-green-700'
+                    : 'bg-red-700'
+                } w-full max-w-[200px] text-white text-center p-1 rounded-md`}
+              >
+                {listing.status}
+              </p>
             </div>
+
             <p className='text-slate-800'>
               <span className='font-semibold text-black'>Description - </span>
               {listing.description}
@@ -114,11 +126,15 @@ export default function Listing() {
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
               <li className='flex items-center gap-1 whitespace-nowrap'>
                 <FaBed className='text-lg' />
-                {listing.bedrooms > 1 ? `${listing.bedrooms} beds ` : `${listing.bedrooms} bed `}
+                {listing.bedrooms > 1
+                  ? `${listing.bedrooms} beds `
+                  : `${listing.bedrooms} bed `}
               </li>
               <li className='flex items-center gap-1 whitespace-nowrap'>
                 <FaBath className='text-lg' />
-                {listing.bathrooms > 1 ? `${listing.bathrooms} baths ` : `${listing.bathrooms} bath `}
+                {listing.bathrooms > 1
+                  ? `${listing.bathrooms} baths `
+                  : `${listing.bathrooms} bath `}
               </li>
               <li className='flex items-center gap-1 whitespace-nowrap'>
                 <FaParking className='text-lg' />
@@ -139,14 +155,16 @@ export default function Listing() {
                 Sign In to Contact Landlord
               </button>
             )}
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button
-                onClick={() => setContact(true)}
-                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
-              >
-                Contact landlord
-              </button>
-            )}
+            {currentUser &&
+              listing.userRef !== currentUser._id &&
+              !contact && (
+                <button
+                  onClick={() => setContact(true)}
+                  className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+                >
+                  Contact landlord
+                </button>
+              )}
             {contact && <Contact listing={listing} />}
           </div>
         </div>
