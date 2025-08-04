@@ -4,7 +4,7 @@ export default function Footer() {
   const landlordEmail = 'info@sewaghar.com';
 
   return (
-    <footer className="bg-slate-900 text-gray-300 py-4 mt-4">
+    <footer className="bg-slate-900 text-gray-300 py-4 mt-auto">
       <div className="max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-16 text-sm">
         {/* Contact Info */}
         <div>
@@ -34,7 +34,7 @@ export default function Footer() {
         {/* Quick Links */}
         <div className="md:pl-6">
           <h2 className="text-white text-md font-semibold mb-2">Quick Links</h2>
-          <ul className="flex gap-8 whitespace-nowrap text-sm">
+          <ul className="flex flex-wrap gap-4 text-sm">
             <li>
               <Link to="/" className="hover:underline">
                 Home

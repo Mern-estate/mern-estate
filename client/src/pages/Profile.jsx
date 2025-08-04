@@ -137,6 +137,9 @@ export default function Profile() {
   };
 
   const handleListingDelete = async (listingId) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this listing?');
+    if (!confirmDelete) return;
+
     try {
       const res = await fetch(`/api/listing/delete/${listingId}`, {
         method: 'DELETE',
@@ -152,7 +155,6 @@ export default function Profile() {
     }
   };
 
-  // Separate booked listings and others
   const activeListings = userListings.filter((listing) => listing.status !== 'Booked');
   const bookedListings = userListings.filter((listing) => listing.status === 'Booked');
 
