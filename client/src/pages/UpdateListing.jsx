@@ -211,8 +211,8 @@ export default function CreateListing() {
             value={formData.status}
             className="border p-3 rounded-lg"
           >
-            <option value="available">Available</option>
-            <option value="booked">Booked</option>
+            <option value="Available">Available</option>
+            <option value="Booked">Booked</option>
           </select>
 
           {/* rest of your form inputs (bedrooms, bathrooms, prices etc) */}

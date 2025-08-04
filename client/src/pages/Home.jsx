@@ -9,12 +9,14 @@ function Section({ title, icon, link, children }) {
         <h2 className='text-2xl sm:text-3xl font-semibold text-slate-800 flex items-center gap-2'>
           <span className='text-teal-600 text-2xl'>{icon}</span> {title}
         </h2>
-        <Link
-          className='text-sm sm:text-base text-teal-700 hover:text-teal-900 transition'
-          to={link}
-        >
-          View all →
-        </Link>
+        {link && (
+          <Link
+            className='text-sm sm:text-base text-teal-700 hover:text-teal-900 transition'
+            to={link}
+          >
+            View all →
+          </Link>
+        )}
       </div>
       <div className='flex flex-wrap gap-6'>{children}</div>
     </div>
@@ -25,6 +27,7 @@ export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
+  const [bookedListings, setBookedListings] = useState([]);
 
   useEffect(() => {
     const fetchOfferListings = async () => {
@@ -54,6 +57,17 @@ export default function Home() {
         const res = await fetch('/api/listing/get?type=sale&limit=6');
         const data = await res.json();
         setSaleListings(data);
+        fetchBookedListings();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchBookedListings = async () => {
+      try {
+        const res = await fetch('/api/listing/get?status=Booked&limit=6');
+        const data = await res.json();
+        setBookedListings(data);
       } catch (error) {
         console.log(error);
       }
@@ -104,7 +118,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Listings */}
+      {/* Listings Section */}
       <div className='max-w-7xl mx-auto px-4 pb-20 space-y-20'>
         {offerListings.length > 0 && (
           <Section title='Recent Offers' icon='🔥' link='/search?offer=true'>
@@ -129,6 +143,16 @@ export default function Home() {
         {saleListings.length > 0 && (
           <Section title='Homes for Sale' icon='💰' link='/search?type=sale'>
             {saleListings.map((listing) => (
+              <div key={listing._id} className='hover:scale-[1.02] transition-transform'>
+                <ListingItem listing={listing} />
+              </div>
+            ))}
+          </Section>
+        )}
+
+        {bookedListings.length > 0 && (
+          <Section title='Recently Booked' icon='✅' link={null}>
+            {bookedListings.map((listing) => (
               <div key={listing._id} className='hover:scale-[1.02] transition-transform'>
                 <ListingItem listing={listing} />
               </div>
