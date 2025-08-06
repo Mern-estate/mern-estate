@@ -150,7 +150,7 @@ export default function Home() {
           </Section>
         )}
 
-        {bookedListings.length > 0 && (
+        {/* {bookedListings.length > 0 && (
           <Section title='Recently Booked' icon='✅' link={null}>
             {bookedListings.map((listing) => (
               <div key={listing._id} className='hover:scale-[1.02] transition-transform'>
@@ -158,7 +158,7 @@ export default function Home() {
               </div>
             ))}
           </Section>
-        )}
+        )} */}
       </div>
     </div>
   );
